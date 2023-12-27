@@ -5,8 +5,7 @@
 
 # Sobre o Projeto
 
-Vai ser um sistema bem objetivo, focado em atender ao cliente e as suas necessidades de 
-forma rápida, intuitiva e divertida, com um plus de uma visão diferente do mercado.
+Vai ser um sistema bem objetivo, focado em atender ao cliente e as suas necessidades de forma rápida, intuitiva e divertida, com um plus de uma visão diferente do mercado.
 
 <h4 align="center"> 
 	🚧  Em desenvolvimento . . .
