@@ -8,3 +8,116 @@ head{
     width: 100%;
     height: 100%;
 }
+
+.image-container {
+    position: relative;
+}
+
+.logoarthur{
+    display: block;
+    margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.content-container {
+    position: relative;
+    z-index: 1; /* Garante que o conteúdo tenha uma ordem de empilhamento superior à imagem */
+    background-color: rgba(255, 255, 255, 0.5); /* Branco com 50% de transparência */
+    border: 2px solid black; /* Borda preta sólida */
+    border-radius: 10px; /* Bordas suaves com raio de 10px */
+    box-sizing: border-box; /* Inclui o padding na largura/altura total */
+    margin-top: 20px; /* Ajusta para compensar a margem superior da imagem */
+    margin-bottom: 20px;
+}
+
+.msghome{
+    color: rgb(16, 123, 211);
+    text-align: center;
+    font-family: Comic Sans MS;
+    margin-top: 10px;
+    /* Para navegadores modernos (usando text-stroke) */
+    -webkit-text-stroke: 1px #000; /* Contorno preto de 2 pixels no WebKit (Safari/Chrome) */
+    text-stroke: 1px #000; /* Contorno preto de 2 pixels */
+    /* Para navegadores mais antigos (usando text-outline) */
+    text-outline: 1px #000; /* Contorno preto de 2 pixels */
+}
+
+.container {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto; /* Centraliza a div horizontalmente */
+    display: flex; /* Adiciona display flex para colocar os itens lado a lado */
+    align-items: center; /* Centraliza verticalmente os itens na div */
+    justify-content: center; /* Centraliza horizontalmente os itens na div */
+}
+
+.calendar-img {
+    width: 25px;
+    height: 25px;
+}
+
+.text-next-to-image {
+    margin-left: 10px; /* Espaço entre a imagem e o texto */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.container2 {
+    text-align: center;
+    margin: 0 auto; /* Centraliza a div horizontalmente */
+    display: flex; /* Adiciona display flex para colocar os itens lado a lado */
+    align-items: center; /* Centraliza os itens verticalmente */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+}
+
+.img-container {
+    margin-right: 10px; /* Adiciona um espaço entre a imagem e os parágrafos */
+}
+
+.gps-img {
+    width: 25px;
+    height: 25px;
+}
+
+.text-container p {
+    margin: 0; /* Remove a margem padrão dos parágrafos para evitar espaçamento adicional */
+}
+
+.text-container p:first-child {
+    text-align: left;
+    font-weight: bold;
+}
+
+.google-map {
+    text-align: center;
+    margin: 20px auto; /* Ajuste conforme necessário */
+}
+
+
+.botoes{
+    font-family: Comic Sans MS;
+    background-color: rgb(16, 123, 211, 0.8);
+    border: none;
+    color: #000000;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: large;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.9s ease; /* Adiciona uma transição suave na cor de fundo */
+}
+
+.botoes:hover {
+    background-color: rgb(16, 123, 211); /* Remove a animação hover enquanto o botão está sendo clicado */
+}
+
+.botoes:active {
+    background-color: rgb(24, 2, 104); /* Altera a cor de fundo para totalmente opaca quando o botão está sendo clicado */
+    color: #ffffff;
+}
