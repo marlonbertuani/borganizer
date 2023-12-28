@@ -1,6 +1,7 @@
 html,
 head{
-    background-image: url("http://45.70.62.172:801/arthur/background.jpg");
+    background-image: url("http://45.70.62.172:801/arthur/img/background.jpg");
+    background-color: lightblue;
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0;
@@ -15,10 +16,10 @@ head{
 
 .logoarthur{
     display: block;
-    margin-top: 60px;
+    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 50%;
 }
 
 .content-container {
@@ -70,6 +71,7 @@ head{
     display: flex; /* Adiciona display flex para colocar os itens lado a lado */
     align-items: center; /* Centraliza os itens verticalmente */
     justify-content: center; /* Centraliza os itens horizontalmente */
+    width: auto;
 }
 
 .img-container {
@@ -83,9 +85,11 @@ head{
 
 .text-container p {
     margin: 0; /* Remove a margem padrão dos parágrafos para evitar espaçamento adicional */
+    font-size: 12px;
 }
 
 .text-container p:first-child {
+    font-size: 15px;
     text-align: left;
     font-weight: bold;
 }
