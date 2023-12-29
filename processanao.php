@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Inclua o arquivo de conexão
 include 'conexao.php';
 
@@ -7,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verifique se o array $_POST['convidados'] está definido
     if (isset($_POST['convidados']) && is_array($_POST['convidados'])) {
         // Recupere a lista de convidados do array POST
-        $convidados = $_POST['convidados'];
+        $convidados = $_POST['convidados'];    
 
         // Conecte-se ao banco de dados
         $conn = new mysqli("192.168.0.14", "arthur", "Marlon@87", "arthur");

@@ -10,23 +10,31 @@ head{
     height: 100%;
 }
 
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
 body {
     background-color: transparent;
-    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
+.menu-container {
+    margin-left: 10px;
 }
 
 .custom-hamburger {
-    color: black; /* Substitua "suacor" pela cor desejada */
-    /* Adicione outras propriedades de estilo conforme necessário */
+    color: black; 
 }
 
-.image-container {
-    position: relative;
+.logo-container {
+    flex: 1; /* Ocupa o máximo possível de espaço disponível */
 }
 
 .logoarthur{
     display: block;
-    margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -35,12 +43,12 @@ body {
 .content-container {
     position: relative;
     z-index: 1; /* Garante que o conteúdo tenha uma ordem de empilhamento superior à imagem */
-    background-color: rgba(255, 255, 255, 0.5); /* Branco com 50% de transparência */
+    background-color: rgba(255, 255, 255, 0.65); /* Branco com 65% de transparência */
     border: 2px solid black; /* Borda preta sólida */
     border-radius: 10px; /* Bordas suaves com raio de 10px */
     box-sizing: border-box; /* Inclui o padding na largura/altura total */
     margin-top: 20px; /* Ajusta para compensar a margem superior da imagem */
-    margin-bottom: 20px;
+    margin-bottom: 6px;
 }
 
 .msghome{
@@ -71,6 +79,7 @@ body {
 }
 
 .text-next-to-image {
+    margin-top: 10px;
     margin-left: 10px; /* Espaço entre a imagem e o texto */
     font-size: 18px;
     font-weight: bold;
@@ -138,6 +147,34 @@ body {
     color: #ffffff;
 }
 
+.botoesn{
+    font-family: Comic Sans MS;
+    background-color: rgba(211, 16, 58, 0.8);
+    border: none;
+    color: #000000;
+    padding: 4px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: large;
+    margin-bottom: 10px;
+    margin-top: -5px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.9s ease; /* Adiciona uma transição suave na cor de fundo */
+}
+
+.botoesn:hover {
+    background-color: rgb(211, 16, 58); /* Remove a animação hover enquanto o botão está sendo clicado */
+    color: #ffffff;
+}
+
+.botoesn:active {
+    background-color: rgb(255, 0, 55); /* Altera a cor de fundo para totalmente opaca quando o botão está sendo clicado */
+    color: #ffffff;
+}
+
 .modal-body {
     text-align: center;
 }
@@ -158,4 +195,13 @@ body {
 /* Remove a margem padrão do modal Bootstrap */
 .menu-modal .modal-dialog {
     margin: 0;
+}
+
+
+/* ********************************** Direcionado a pagina de mura_recados.php ********************************** */
+.btn-voltar {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }

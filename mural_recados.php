@@ -11,11 +11,9 @@
 </head>
 <body>
     <div style="text-align: center; margin: 20px;">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#deixarRecadoModal">
-            Deixar um Recado
-        </button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#deixarRecadoModal">Deixar um Recado</button>
+        <button type="button" class="btn btn-secondary" onclick="voltarParaInicio()">Voltar para o Início</button>
     </div>
-
     <!-- Modal para deixar recado -->
     <div class="modal fade" id="deixarRecadoModal" tabindex="-1" role="dialog" aria-labelledby="deixarRecadoModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -41,11 +39,11 @@
 
     <!-- Lista de recados -->
     <div class="container" id="listaRecados">
-        <!-- Recados serão exibidos aqui -->
+        <?php include 'carregar_recados.php'; ?>
     </div>
 
-    <!-- Incluindo Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Incluindo Bootstrap e JS Incluindo jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -55,35 +53,39 @@
             var mensagem = document.getElementById('mensagemRecado').value;
             var nome = document.getElementById('nomeRecado').value || 'Anônimo';
 
-            // Simulando o salvamento em localStorage (substitua por um backend real)
-            var recados = JSON.parse(localStorage.getItem('recados')) || [];
-            recados.push({ mensagem: mensagem, nome: nome });
-            localStorage.setItem('recados', JSON.stringify(recados));
-
-            // Atualizando a lista de recados
-            atualizarListaRecados();
-            
-            // Fechando o modal
-            $('#deixarRecadoModal').modal('hide');
+            // Enviar dados para o servidor usando AJAX
+            $.ajax({
+                type: "POST",
+                url: "salvar_recado.php",
+                data: { mensagem: mensagem, nome: nome },
+                success: function(response) {
+                    // Atualizar a lista de recados após o salvamento
+                    atualizarListaRecados();
+                    
+                    // Fechar o modal
+                    $('#deixarRecadoModal').modal('hide');
+                },
+                error: function(error) {
+                    console.error("Erro na requisição AJAX:", error);
+                }
+            });
         }
 
         // Função para atualizar a lista de recados
         function atualizarListaRecados() {
-            var recados = JSON.parse(localStorage.getItem('recados')) || [];
-            var listaRecadosElement = document.getElementById('listaRecados');
-            listaRecadosElement.innerHTML = '';
+            // Carregar a lista de recados usando PHP
+            $("#listaRecados").load("carregar_recados.php");
+        }
 
-            for (var i = 0; i < recados.length; i++) {
-                var recadoElement = document.createElement('div');
-                recadoElement.className = 'alert alert-info';
-                recadoElement.innerHTML = '<strong>' + recados[i].nome + '</strong>: ' + recados[i].mensagem;
-
-                listaRecadosElement.appendChild(recadoElement);
-            }
+        // Função para redirecionar para a página inicial
+        function voltarParaInicio() {
+            window.location.href = "index.php";
         }
 
         // Atualizando a lista de recados ao carregar a página
         window.onload = atualizarListaRecados;
     </script>
+    <!-- Botão no final da página -->
+    <button type="button" class="btn btn-secondary btn-voltar" onclick="voltarParaInicio()">Voltar para o Início</button>
 </body>
 </html>

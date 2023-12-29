@@ -199,8 +199,7 @@
         </div>
     </div>
     <script>
-        var convidados = []; // Array para armazenar convidados
-        
+        var convidados = []; // Array para armazenar convidados      
         function validarFormulario() {
             var nomeInput = document.getElementById('inputNome');
             var sobrenomeInput = document.getElementById('inputSobrenome');
@@ -329,7 +328,6 @@
             }
         }
 
-        // Adicione esta função para iniciar o processo de cadastro de novo
         function iniciarCadastroNovo() {
             // Reiniciar o processo de cadastro com um novo nome
             $('#convidadosModal').modal('hide');
@@ -339,23 +337,133 @@
             document.getElementById('inputNome').value = "";
         }
 
-        function finalizar() {
-            // Aqui você pode fazer o que quiser com a lista de convidados
-            console.log(convidados);
+        function processarConfirmacoes() {
+            // Verificar se há convidados para processar
+            if (convidados.length === 0) {
+                alert("Nenhum convidado para confirmar.");
+                return;
+            }
 
-            // Limpar a lista de convidados
-            limparListaConvidados();
+            // Enviar todos os dados de confirmação para o servidor
+            $.ajax({
+                type: "POST",
+                url: "processar_confirmacoes.php", // Arquivo PHP para processar as confirmações
+                data: { convidados: convidados },
+                success: function(response) {
+                    // Manipular a resposta do servidor, se necessário
+                    console.log(response);
 
-            // Fechar o modal de convidados
-            $('#convidadosModal').modal('hide');
+                    // Limpar a lista de convidados
+                    limparListaConvidados();
+
+                    // Fechar o modal de convidados
+                    $('#convidadosModal').modal('hide');
+                },
+                error: function(error) {
+                    // Manipular erros, se necessário
+                    console.error(error);
+                }
+            });
         }
+
+        // function validarNaoVouFormulario() {
+        //     var nomeNaoVouInput = document.getElementById('inputNomeNaoVou');
+        //     var sobrenomeNaoVouInput = document.getElementById('inputSobrenomeNaoVou');
+
+        //     var nomeNaoVou = nomeNaoVouInput.value.trim(); // Remover espaços em branco
+        //     var sobrenomeNaoVou = sobrenomeNaoVouInput.value.trim(); // Remover espaços em branco
+
+        //     if (!nomeNaoVou || !sobrenomeNaoVou) {
+        //         alert("Por favor, preencha os campos de nome e sobrenome.");
+        //         nomeNaoVouInput.focus();
+        //         return false;
+        //     }
+
+        //     // Aqui você pode fazer o que quiser com os dados (nomeNaoVou, sobrenomeNaoVou, comentário)
+
+        //     // Fechar o modal após o envio
+        //     $('#naoVouModal').modal('hide');
+
+        //     // Limpar os campos após o envio
+        //     nomeNaoVouInput.value = "";
+        //     sobrenomeNaoVouInput.value = "";
+        //     document.getElementById('inputComentario').value = "";
+
+        //     return false;
+        // }
+
+        function finalizar() {
+            // Certifique-se de que a lista de convidados não está vazia
+            if (convidados.length === 0) {
+                console.error("Erro: Nenhum convidado para finalizar.");
+                return;
+            }
+
+            // Criar um formulário dinâmico
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'confirmacoes.php'; // Altere o caminho conforme necessário
+
+            // Adicionar os dados dos convidados como campos ocultos ao formulário
+            for (var i = 0; i < convidados.length; i++) {
+                var inputNome = document.createElement('input');
+                inputNome.type = 'hidden';
+                inputNome.name = 'convidados[' + i + '][nome]';
+                inputNome.value = convidados[i].nome;
+
+                var inputSobrenome = document.createElement('input');
+                inputSobrenome.type = 'hidden';
+                inputSobrenome.name = 'convidados[' + i + '][sobrenome]';
+                inputSobrenome.value = convidados[i].sobrenome;
+
+                // Adicionar campo de input para a idade
+                var inputIdade = document.createElement('input');
+                inputIdade.type = 'hidden';
+                inputIdade.name = 'convidados[' + i + '][idade]';
+                inputIdade.value = convidados[i].idade;
+
+                // Adicione outros campos conforme necessário (idade, etc.)
+
+                form.appendChild(inputNome);
+                form.appendChild(inputSobrenome);
+                form.appendChild(inputIdade);
+                // Adicione outros campos conforme necessário
+            }
+
+            // Enviar os dados usando AJAX
+            $.ajax({
+                type: "POST",
+                url: form.action,
+                data: $(form).serialize(), // Serializar o formulário
+                success: function(response) {
+                    // Manipular a resposta do servidor
+                    alert("Presença confirmada com sucesso! aguardamos voçê(ês) lá!"); // Exibir a resposta do servidor em um alerta
+                },
+                error: function(error) {
+                    // Manipular erros, se necessário
+                    console.error("Erro na requisição AJAX:", error);
+                }
+            });
+
+            // Verificar se o formulário é filho do body antes de tentar removê-lo
+            if (form.parentNode === document.body) {
+                // Remover o formulário da página
+                document.body.removeChild(form);
+            }
+
+            $('#convidadosModal').modal('hide');
+
+        }
+
 
         function validarNaoVouFormulario() {
             var nomeNaoVouInput = document.getElementById('inputNomeNaoVou');
             var sobrenomeNaoVouInput = document.getElementById('inputSobrenomeNaoVou');
+            var comentarioInput = document.getElementById('inputComentario');
 
-            var nomeNaoVou = nomeNaoVouInput.value.trim(); // Remover espaços em branco
-            var sobrenomeNaoVou = sobrenomeNaoVouInput.value.trim(); // Remover espaços em branco
+            var nomeNaoVou = nomeNaoVouInput.value.trim();
+            var sobrenomeNaoVou = sobrenomeNaoVouInput.value.trim();
+            var comentario = comentarioInput.value.trim();
 
             if (!nomeNaoVou || !sobrenomeNaoVou) {
                 alert("Por favor, preencha os campos de nome e sobrenome.");
@@ -363,7 +471,25 @@
                 return false;
             }
 
-            // Aqui você pode fazer o que quiser com os dados (nomeNaoVou, sobrenomeNaoVou, comentário)
+            // Crie um objeto para armazenar os dados
+            var dados = {
+                nome: nomeNaoVou,
+                sobrenome: sobrenomeNaoVou,
+                comentario: comentario
+            };
+
+            // Envie os dados para o servidor usando AJAX
+            $.ajax({
+                type: "POST",
+                url: "processanao.php",
+                data: { convidados: [dados] }, // Envie como um array
+                success: function (response) {
+                    alert(response); // Exiba a resposta do servidor
+                },
+                error: function (error) {
+                    console.error("Erro na requisição AJAX:", error);
+                }
+            });
 
             // Fechar o modal após o envio
             $('#naoVouModal').modal('hide');
@@ -371,20 +497,21 @@
             // Limpar os campos após o envio
             nomeNaoVouInput.value = "";
             sobrenomeNaoVouInput.value = "";
-            document.getElementById('inputComentario').value = "";
+            comentarioInput.value = "";
 
             return false;
         }
+
     </script>
     <!-- Incluindo Bootstrap JS (necessário para funcionalidade do Modal) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Incluindo fontawesome para os ícones -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
     <!-- Modal de Menu -->
     <div class="modal fade" id="menuModal" tabindex="-1" role="dialog" aria-labelledby="menuModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-dialog menu-modal" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="menuModalLabel">Menu</h5>
@@ -394,10 +521,9 @@
                 </div>
                 <div class="modal-body">
                     <!-- Adicione seus itens de menu aqui -->
-                    <a href="#"><i class="fas fa-home fa-2x"></i> Início</a>
-                    <a href="#"><i class="fas fa-user fa-2x"></i> Perfil</a>
-                    <a href="#"><i class="fas fa-cog fa-2x"></i> Configurações</a>
-                    <!-- ... -->
+                    <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='mural_recados.php'">Mural de Recados</button>
+                    <button type="button" class="btn btn-warning btn-block mb-2">Compartilhar fotos</button>
+                    <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.open('https://api.whatsapp.com/send/?phone=5531994778938&text=Preciso+de+ajuda+para+confirmar+minha+presen%C3%A7a.&type=phone_number&app_absent=0', '_blank')">Entrar em Contato!</button>                
                 </div>
             </div>
         </div>

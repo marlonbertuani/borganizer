@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sobrenome = $conn->real_escape_string($convidado['sobrenome']);
                 $idade = $conn->real_escape_string($convidado['idade']);
 
-                $sql = "INSERT INTO convidados (nome, sobrenome, idade) VALUES ('$nome', '$sobrenome', '$idade')";
+                $sql = "INSERT INTO confirmacoes (nome, sobrenome, idade) VALUES ('$nome', '$sobrenome', '$idade')";
 
                 if (!$conn->query($sql)) {
                     throw new Exception("Erro na inserção no banco de dados: " . $conn->error);
