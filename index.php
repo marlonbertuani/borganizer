@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-body">
                     <!-- Formulário para coletar nome, sobrenome e comentário -->
-                    <form id="naoVouForm" onsubmit="return validarNaoVouFormulario()">
+                    <form id="naoVouForm">
                         <div class="form-group text-center">
                             <input type="text" class="form-control border-0 text-center" id="inputNomeNaoVou" placeholder="Digite seu nome" required>
                         </div>
@@ -191,7 +191,7 @@
                         <!-- Botões para cancelar e confirmar -->
                         <div class="text-center">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                            <button type="button" class="btn btn-primary" onclick="enviarDadosNaoVou()">Confirmar</button>
                         </div>
                     </form>
                 </div>
@@ -431,6 +431,41 @@
             
             // Remover o formulário da página, se desejar
             document.body.removeChild(form);
+        }
+
+        function enviarDadosNaoVou() {
+            var nomeNaoVou = document.getElementById('inputNomeNaoVou').value.trim();
+            var sobrenomeNaoVou = document.getElementById('inputSobrenomeNaoVou').value.trim();
+            var comentario = document.getElementById('inputComentario').value;
+
+            // Realizar uma requisição AJAX para enviar os dados
+            $.ajax({
+                type: "POST",
+                url: "processanao.php", // O caminho para o seu arquivo processa.php
+                data: {
+                    nao_vou: {
+                        nome: nomeNaoVou,
+                        sobrenome: sobrenomeNaoVou,
+                        comentario: comentario
+                    }
+                },
+                success: function (response) {
+                    // Manipular a resposta do servidor, se necessário
+                    console.log(response);
+
+                    // Fechar o modal após o envio
+                    $('#naoVouModal').modal('hide');
+
+                    // Limpar os campos após o envio
+                    document.getElementById('inputNomeNaoVou').value = "";
+                    document.getElementById('inputSobrenomeNaoVou').value = "";
+                    document.getElementById('inputComentario').value = "";
+                },
+                error: function (error) {
+                    // Manipular erros, se necessário
+                    console.error(error);
+                }
+            });
         }
     </script>
     <!-- Incluindo Bootstrap JS (necessário para funcionalidade do Modal) -->
