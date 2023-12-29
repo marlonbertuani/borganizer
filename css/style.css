@@ -10,6 +10,16 @@ head{
     height: 100%;
 }
 
+body {
+    background-color: transparent;
+    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
+.custom-hamburger {
+    color: black; /* Substitua "suacor" pela cor desejada */
+    /* Adicione outras propriedades de estilo conforme necessário */
+}
+
 .image-container {
     position: relative;
 }
@@ -57,6 +67,7 @@ head{
 .calendar-img {
     width: 25px;
     height: 25px;
+    margin-bottom: 15px;
 }
 
 .text-next-to-image {
@@ -96,7 +107,7 @@ head{
 
 .google-map {
     text-align: center;
-    margin: 20px auto; /* Ajuste conforme necessário */
+    margin: 5px auto; /* Ajuste conforme necessário */
 }
 
 
@@ -105,13 +116,13 @@ head{
     background-color: rgb(16, 123, 211, 0.8);
     border: none;
     color: #000000;
-    padding: 10px 10px;
+    padding: 4px 10px;
     text-align: center;
     text-decoration: none;
     font-weight: bold;
     display: inline-block;
     font-size: large;
-    margin: 4px 2px;
+    margin-bottom: 10px;
     cursor: pointer;
     border-radius: 10px;
     transition: background-color 0.9s ease; /* Adiciona uma transição suave na cor de fundo */
@@ -119,9 +130,32 @@ head{
 
 .botoes:hover {
     background-color: rgb(16, 123, 211); /* Remove a animação hover enquanto o botão está sendo clicado */
+    color: #ffffff;
 }
 
 .botoes:active {
     background-color: rgb(24, 2, 104); /* Altera a cor de fundo para totalmente opaca quando o botão está sendo clicado */
     color: #ffffff;
+}
+
+.modal-body {
+    text-align: center;
+}
+
+/* Estilo personalizado para o modal de menu */
+.menu-modal {
+    max-width: 200px; /* Largura máxima desejada */
+    margin-left: auto; /* Alinha à direita da tela */
+    margin-right: 10px; /* Margem à direita para evitar borda da tela */
+    text-align: right; /* Alinha o conteúdo à direita */
+}
+
+/* Ajusta o conteúdo interno do modal para ocupar a largura máxima */
+.menu-modal .modal-content {
+    width: 100%;
+}
+
+/* Remove a margem padrão do modal Bootstrap */
+.menu-modal .modal-dialog {
+    margin: 0;
 }
