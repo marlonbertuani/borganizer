@@ -126,7 +126,7 @@
                     </div>
                     <div class="modal-body">
                         <p>Olá <span id="nomeConfirmado"></span>, fico feliz em contar com sua presença!</p>
-                        <p>Só mais uma pergunta, considero voçê como?</p>
+                        <p>Só mais uma pergunta, considero você como?</p>
                         <!-- Div para os botões de alternância -->
                         <div class="d-flex flex-column align-items-start mb-3">
                             <!-- Botões de alternância para seleção de adulto ou criança -->
