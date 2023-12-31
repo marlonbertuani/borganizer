@@ -365,6 +365,7 @@
                     });
                     return;
                 }
+
                 // Pergunta se os convidados foram cadastrados e se pode prosseguir
                 Swal.fire({
                     html: 'Todos convidados foram cadastrados? Posso prosseguir?',
@@ -384,6 +385,7 @@
                     }
                 });
             }
+
             function enviarDados() {
                 // Criar um formulário dinâmico
                 var form = document.createElement('form');
@@ -396,18 +398,22 @@
                     inputNome.type = 'hidden';
                     inputNome.name = 'convidados[' + i + '][nome]';
                     inputNome.value = convidados[i].nome;
+
                     var inputSobrenome = document.createElement('input');
                     inputSobrenome.type = 'hidden';
                     inputSobrenome.name = 'convidados[' + i + '][sobrenome]';
                     inputSobrenome.value = convidados[i].sobrenome;
+
                     var inputIdade = document.createElement('input');
                     inputIdade.type = 'hidden';
                     inputIdade.name = 'convidados[' + i + '][idade]';
                     inputIdade.value = convidados[i].idade;
+
                     form.appendChild(inputNome);
                     form.appendChild(inputSobrenome);
                     form.appendChild(inputIdade);
                 }
+
                 // Enviar os dados usando AJAX
                 $.ajax({
                     type: "POST",
@@ -427,15 +433,18 @@
                         console.error("Erro na requisição AJAX:", error);
                     }
                 });
+
                 // Verificar se o formulário é filho do body antes de tentar removê-lo
                 if (form.parentNode === document.body) {
                     // Remover o formulário da página
                     document.body.removeChild(form);
                 }
+
                 $('#convidadosModal').modal('hide');
                 // Limpar a lista de convidados
                 limparListaConvidados();
             }
+
             function validarNaoVouFormulario() {
                 var nomeNaoVouInput = document.getElementById('inputNomeNaoVou');
                 var sobrenomeNaoVouInput = document.getElementById('inputSobrenomeNaoVou');
