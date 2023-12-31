@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <!-- Meu CSS -->
         <link rel="stylesheet" href="css/style.css">
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body>
         <div class="header-container">
@@ -27,7 +26,6 @@
         </div>   
         <div class="content-container">
             <h1 class="msghome">Aniversário do Arthur!</h1>
-            <img src="img/arthur3.png" alt="Imagem arthur" width="230" height="260" class="arthur-img">
             <h1 style="font-size: medium; text-align: center;">Confirme sua presença e nos ajude a organizar este momento especial!</h1>
             <h1 style="font-size: medium; text-align: center;">Prazo para confirmações até 17/01/2024 - 23:55</h1>
             <div class="container">
@@ -43,12 +41,15 @@
                     <p>Rua Rio Comprido, 989 - Riacho das Pedras, Contagem - MG</p>
                 </div>
             </div>
+            <div class="google-map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3750.4449387943505!2d-44.048881699999995!3d-19.947782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa695861bc7e0cb%3A0xd2ab7ab7ba7f2a97!2sR.%20Rio%20Comprido%2C%20989%20-%20Riacho%20das%20Pedras%2C%20Contagem%20-%20MG%2C%2032280-070!5e0!3m2!1spt-BR!2sbr!4v1703733171312!5m2!1spt-BR!2sbr" width="385" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
             <!-- Botao Modal -->
             <div style="text-align: center;">
                 <a class="botoes" data-toggle="modal" data-target="#myModal">Opções de rota!</a>
             </div>
         </div>
-        <!-- Modal Rotas -->
+        <!-- Modal -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -126,16 +127,14 @@
                     <div class="modal-body">
                         <p>Olá <span id="nomeConfirmado"></span>, fico feliz em contar com sua presença!</p>
                         <p>Só mais uma pergunta, considero você como?</p>
-                        <div class="opcao-btn-group btn-group" role="group" aria-label="Opções">
-                            <!-- Botão para selecionar Adulto -->
-                            <label class="opcao-btn btn btn-outline-primary">
-                                <input type="radio" name="idadeRadio" id="adultoRadio" value="adulto" onclick="selecionarOpcao('adulto')">
-                                <i class="fas fa-user"></i> Adulto
+                        <!-- Div para os botões de alternância -->
+                        <div class="d-flex flex-column align-items-start mb-3">
+                            <!-- Botões de alternância para seleção de adulto ou criança -->
+                            <label class="btn btn-secondary mb-2 active">
+                                <input type="radio" name="idadeRadio" id="adultoRadio" value="adulto" checked> Adulto
                             </label>
-                            <!-- Botão para selecionar Criança -->
-                            <label class="opcao-btn btn btn-outline-primary">
-                                <input type="radio" name="idadeRadio" id="criancaRadio" value="crianca" onclick="selecionarOpcao('crianca')">
-                                <i class="fas fa-child"></i> Criança (abaixo de 7 anos)
+                            <label class="btn btn-secondary mb-2">
+                                <input type="radio" name="idadeRadio" id="criancaRadio" value="crianca"> Criança (abaixo de 7 anos)
                             </label>
                         </div>
                         <!-- Nova div para o botão de adicionar convidado -->
@@ -163,7 +162,7 @@
                         </ul>
                         <p></p>
                         <div class="text-center">
-                            <button type="button" class="btn btn-success" onclick="iniciarCadastroNovo()">Adicionar Convidado</button>
+                            <button type="button" class="btn btn-success" onclick="iniciarCadastroNovo()">Adicionar Acompanhante</button>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -206,120 +205,104 @@
             </div>
         </div>
         <script>
-            var convidados = []; // Array para armazenar convidados
+            var convidados = []; // Array para armazenar convidados      
             function validarFormulario() {
                 var nomeInput = document.getElementById('inputNome');
                 var sobrenomeInput = document.getElementById('inputSobrenome');
+
                 var nome = nomeInput.value.trim(); // Remover espaços em branco
                 var sobrenome = sobrenomeInput.value.trim(); // Remover espaços em branco
-                if (!nome) {
-                    Swal.fire({
-                        html: 'Para prosseguir, preencha o campo de nome.',
-                        icon: 'warning',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Voltar',
-                    });
-                    nomeInput.focus();
-                    return false;
-                }
-                // Verificar se o nome e sobrenome já estão cadastrados
-                var duplicado = convidados.some(function(convidado) {
-                    return convidado.nome.toLowerCase() === nome.toLowerCase() &&
-                        convidado.sobrenome.toLowerCase() === sobrenome.toLowerCase();
-                });
-                if (duplicado) {
-                    Swal.fire({
-                        html: 'Este nome ja foi cadastrado!<br/> Para verificar os convidados cadastrados clique no botão <b>Cadastrados</b>',
-                        icon: 'warning',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Voltar',
-                    });
+
+                if (!nome || !sobrenome) {
+                    document.getElementById('erroNome').innerText = "Por favor, preencha os campos de nome e sobrenome.";
                     nomeInput.focus();
                     return false;
                 } else {
                     document.getElementById('erroNome').innerText = "";
                 }
+
+                // Verificar se o nome e sobrenome já estão cadastrados
+                var duplicado = convidados.some(function(convidado) {
+                    return convidado.nome.toLowerCase() === nome.toLowerCase() &&
+                        convidado.sobrenome.toLowerCase() === sobrenome.toLowerCase();
+                });
+
+                if (duplicado) {
+                    document.getElementById('erroNome').innerText = "Este nome e sobrenome já estão cadastrados. Por favor, escolha outros.";
+                    nomeInput.focus();
+                    return false;
+                } else {
+                    document.getElementById('erroNome').innerText = "";
+                }
+
                 // Adicione o nome e sobrenome ao objeto do convidado
                 var convidado = { nome: nome, sobrenome: sobrenome };
                 convidados.push(convidado);
+
                 document.getElementById('nomeConfirmado').innerText = nome;
-                // Remover a classe 'active' de todos os botões
-                document.getElementById("adultoRadio").checked = false;
-                document.getElementById("criancaRadio").checked = false;
-                var opcoes = document.querySelectorAll('.opcao-btn');
-                opcoes.forEach(function (opcaoBtn) {
-                    opcaoBtn.classList.remove('active');
-                });
+
                 $('#confirmacaoModal').modal('hide');
                 $('#idadeModal').modal('show');
+
                 return false;
             }
+
             function limparListaConvidados() {
                 convidados = [];
                 atualizarListaConvidados();
             }
+
             function adicionarConvidado() {
-                // Verificar se algum botão de rádio está selecionado
-                var adultoRadio = document.getElementById("adultoRadio");
-                var criancaRadio = document.getElementById("criancaRadio");
-                if (!adultoRadio.checked && !criancaRadio.checked) {
-                    // Nenhum botão de rádio foi selecionado, exibir mensagem
-                    Swal.fire({
-                        html: 'Por favor, selecione se você é um adulto ou uma criança.',
-                        icon: 'warning',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Voltar'
-                    });
-                    return; // Impede que a função prossiga
-                }
                 var idadeSelecionada = $("input[name='idadeRadio']:checked").val();
                 var nome = document.getElementById('nomeConfirmado').innerText;
                 var sobrenome = convidados[convidados.length - 1].sobrenome;
+
                 convidados[convidados.length - 1].idade = idadeSelecionada;
+
                 // Atualizar a lista de convidados no modal
                 atualizarListaConvidados();
+
                 // Limpar o campo de nome para o próximo convidado
                 document.getElementById('inputNome').value = "";
                 document.getElementById('inputSobrenome').value = "";
+
                 // Fechar o modal de idade
                 $('#idadeModal').modal('hide');
                 // Abrir novamente o modal de confirmação
                 $('#convidadosModal').modal('show');
             }
-            function selecionarOpcao(opcao) {
-            // Remover a classe 'active' de todos os botões antes de selecionar o novo
-            var opcoes = document.querySelectorAll('.opcao-btn');
-            opcoes.forEach(function (opcaoBtn) {
-                opcaoBtn.classList.remove('active');
-            });
-            // Adicionar a classe 'active' ao botão selecionado
-            var botaoSelecionado = document.querySelector('#' + opcao + 'Radio');
-            botaoSelecionado.parentNode.classList.add('active');
-            }
+
             function voltar() {
                 // Fechar o modal de idade
                 $('#confirmacaoModal').modal('hide');
             }
+
             function voltar2() {
                 // Abrir novamente o modal de confirmação
                 $('#convidadosModal').modal('hide');
             }
+
             function exibirlista() {
                 // Abrir novamente o modal de confirmação
                 $('#convidadosModal').modal('show');
             }
+
             function atualizarListaConvidados() {
                 var listaConvidados = document.getElementById('listaConvidados');
                 listaConvidados.innerHTML = ""; // Limpar a lista antes de atualizar
+
                 for (var i = 0; i < convidados.length; i++) {
                     var li = document.createElement('li');
                     li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
                     // Divisão para o nome completo (nome + sobrenome)
                     var divNome = document.createElement('div');
                     divNome.innerHTML = convidados[i].nome + ' ' + convidados[i].sobrenome;
+
                     // Divisão para o tipo de convidado e botão de exclusão
                     var divDireita = document.createElement('div');
                     divDireita.className = 'd-flex justify-content-end align-items-center'; // Ajustei para uma linha (row) e alinhamento à direita
+
                     // Adicionar ícone de lixeira para deletar o convidado
                     var span = document.createElement('span');
                     span.className = 'badge badge-danger badge-pill ml-2'; // Adicionei uma margem à esquerda (ml-2)
@@ -330,9 +313,11 @@
                             deletarConvidado(i);
                         };
                     }(i);
+
                     // Tipo de convidado (Adulto ou Criança)
                     var tipoConvidado = convidados[i].idade === 'adulto' ? 'Adulto' : 'Criança';
                     divDireita.innerHTML = tipoConvidado;
+
                     // Adicionar divisões à li
                     divDireita.appendChild(span);
                     li.appendChild(divNome);
@@ -340,6 +325,7 @@
                     listaConvidados.appendChild(li);
                 }
             }
+
             function deletarConvidado(index) {
                 // Confirmar a exclusão
                 if (confirm("Tem certeza que deseja excluir este convidado?")) {
@@ -347,46 +333,23 @@
                     atualizarListaConvidados();
                 }
             }
+
             function iniciarCadastroNovo() {
                 // Reiniciar o processo de cadastro com um novo nome
                 $('#convidadosModal').modal('hide');
                 $('#confirmacaoModal').modal('show');
+                
                 // Limpar o campo de nome para o próximo convidado
                 document.getElementById('inputNome').value = "";
             }
+
             function finalizar() {
                 // Certifique-se de que a lista de convidados não está vazia
                 if (convidados.length === 0) {
-                    Swal.fire({
-                        html: 'Nenhum convidado cadastrado!<br/> Antes de finalizar, cadastre ao menos um convidado.',
-                        icon: 'error',
-                        confirmButtonColor: '#007bff',
-                        confirmButtonText: 'Voltar',
-                    });
+                    alert("Nenhum convidado cadastrado!\npara finalizar, por favor cadastre ao menos um convidado.");
                     return;
                 }
 
-                // Pergunta se os convidados foram cadastrados e se pode prosseguir
-                Swal.fire({
-                    html: 'Todos convidados foram cadastrados? Posso prosseguir?',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#007bff',
-                    cancelButtonText: 'Não',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sim',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // O usuário clicou em "Sim", proceda com o envio dos dados
-                        enviarDados();
-                    } else {
-                        // O usuário clicou em "Não" ou fechou o alerta, faça o que for necessário
-                        console.log('O usuário optou por não prosseguir.');
-                    }
-                });
-            }
-
-            function enviarDados() {
                 // Criar um formulário dinâmico
                 var form = document.createElement('form');
                 form.method = 'POST';
@@ -404,14 +367,18 @@
                     inputSobrenome.name = 'convidados[' + i + '][sobrenome]';
                     inputSobrenome.value = convidados[i].sobrenome;
 
+                    // Adicionar campo de input para a idade
                     var inputIdade = document.createElement('input');
                     inputIdade.type = 'hidden';
                     inputIdade.name = 'convidados[' + i + '][idade]';
                     inputIdade.value = convidados[i].idade;
 
+                    // Adicione outros campos conforme necessário (idade, etc.)
+
                     form.appendChild(inputNome);
                     form.appendChild(inputSobrenome);
                     form.appendChild(inputIdade);
+                    // Adicione outros campos conforme necessário
                 }
 
                 // Enviar os dados usando AJAX
@@ -421,12 +388,7 @@
                     data: $(form).serialize(), // Serializar o formulário
                     success: function(response) {
                         // Manipular a resposta do servidor
-                        Swal.fire({
-                            html: 'Presença confirmada com sucesso!',
-                            icon: 'success',
-                            confirmButtonColor: '#28a745',
-                            confirmButtonText: 'Fechar'
-                        });
+                        alert("Presença confirmada com sucesso!"); // Exibir a resposta do servidor em um alerta
                     },
                     error: function(error) {
                         // Manipular erros, se necessário
@@ -441,47 +403,58 @@
                 }
 
                 $('#convidadosModal').modal('hide');
+
                 // Limpar a lista de convidados
                 limparListaConvidados();
+
             }
 
             function validarNaoVouFormulario() {
                 var nomeNaoVouInput = document.getElementById('inputNomeNaoVou');
                 var sobrenomeNaoVouInput = document.getElementById('inputSobrenomeNaoVou');
                 var comentarioInput = document.getElementById('inputComentario');
+
                 var nomeNaoVou = nomeNaoVouInput.value.trim();
                 var sobrenomeNaoVou = sobrenomeNaoVouInput.value.trim();
                 var comentario = comentarioInput.value.trim();
-                if (!nomeNaoVou) {
-                    alert("Por favor, preencha o campo de nome.");
+
+                if (!nomeNaoVou || !sobrenomeNaoVou) {
+                    alert("Por favor, preencha os campos de nome e sobrenome.");
                     nomeNaoVouInput.focus();
+                    return false;
                 }
+
                 // Crie um objeto para armazenar os dados
                 var dados = {
                     nome: nomeNaoVou,
                     sobrenome: sobrenomeNaoVou,
                     comentario: comentario
                 };
+
                 // Envie os dados para o servidor usando AJAX
                 $.ajax({
                     type: "POST",
                     url: "processanao.php",
                     data: { convidados: [dados] }, // Envie como um array
                     success: function (response) {
-                        alert("È uma pena não contar com sua presença, obrigado por nos avisar!"); // Exiba a resposta do servidor
+                        alert("È uma pena que nao vou contar com sua presença, lhe aguardo na proxima e obrigado por nos avisar!"); // Exiba a resposta do servidor
                     },
                     error: function (error) {
                         console.error("Erro na requisição AJAX:", error);
                     }
                 });
+
                 // Fechar o modal após o envio
                 $('#naoVouModal').modal('hide');
+
                 // Limpar os campos após o envio
                 nomeNaoVouInput.value = "";
                 sobrenomeNaoVouInput.value = "";
                 comentarioInput.value = "";
+
                 return false;
             }
+
         </script>
         <!-- Incluindo Bootstrap JS (necessário para funcionalidade do Modal) -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
