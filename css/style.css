@@ -1,14 +1,14 @@
 html,
 head{
     background-image: url("http://45.70.62.172:801/arthur/img/background.jpg");
-    background-color: rgba(255, 255, 255, 0.5);
+    background-attachment: fixed;
     background-size: cover;
     margin: 0;
     margin-top: 0;
     width: 100%;
     height: 100%;
 }
-body {
+body.index {
     background-color: transparent;
 }
 .header-container {
@@ -231,9 +231,51 @@ body {
     transform: translateX(-50%);
 }
 /* ********************************** Direcionado as paginas de consultas ********************************** */
+body.consultas {
+    background: repeating-linear-gradient(
+        to bottom, 
+        rgba(255, 255, 255, 0.5), 
+        rgba(255, 255, 255, 0.5) 30px, 
+        rgba(255, 255, 255, 0.5) 30px, 
+        rgba(255, 255, 255, 0.5) 60px
+        );
+    background-attachment: fixed;
+    z-index: -1;
+}
 
-.consultas {
-    background-repeat: repeat-y;
-    background-color: rgba(255, 255, 255, 0.5);
-    height: 100%;
+/* ********************************** Direcionado as paginas de consultas ********************************** */
+body.fotos {
+    background-color: rgba(255, 255, 255, 0.6);
+    height: 100vh; /* Ajusta a altura do corpo para 100% da viewport */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-sizing: border-box; /* Inclui o padding na largura/altura total */
+}
+
+h2.fotos {
+    color: rgb(16, 123, 211);
+    text-align: center;
+    font-family: Comic Sans MS;
+    -webkit-text-stroke: 1px #000;
+    text-stroke: 1px #000;
+    text-outline: 1px #000;
+}
+
+#uploadForm {
+    margin: 0 auto;
+    width: 90%;
+}
+
+#progressBarContainer {
+    margin-top: 20px;
+}
+
+#progressBar {
+    background-color: #28a745; /* Cor verde do Bootstrap para sucesso */
 }

@@ -1,90 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
+    <head class="fotos">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, max-scale=1.0">
         <title>Mural de Fotos</title>
         <!-- Incluindo Bootstrap CSS -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <!-- Seu CSS personalizado -->
         <link rel="stylesheet" href="css/style.css">
     </head>
-    <body>
-         <script>
-            window.onload = function() {
-                alert("Você concorda em compartilhar suas fotos não só com os organizadores do evento, mas também com todos os convidados?");
-                exibirConfirmacaoCompartilhamento();
-            };
-        </script>
-        <!-- Botão para iniciar o processo de compartilhamento -->
-        <div class="text-center mt-2">
-            <button type="button" class="btn btn-success" onclick="exibirConfirmacaoCompartilhamento()">Compartilhar Fotos</button>
-        </div>
-        <!-- Formulário de compartilhamento de fotos -->
-        <div class="container" id="formularioCompartilhamento" style="display: none;">
-            <h2>Compartilhar Fotos</h2>
-            <form id="formCompartilhamento" enctype="multipart/form-data" method="post">
-                <input type="file" id="fileInput" multiple>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exibirNoMural">
-                    <label class="form-check-label" for="exibirNoMural">Exibir no Mural</label>
+    <body class="fotos">
+        <br>
+        <h2 class="fotos">Envio de Arquivos</h2>
+        <form action="upload.php" method="post" enctype="multipart/form-data" id="uploadForm">
+            <p>Sejam bem vindos a esta novidade, abaixo algumas observações sobre esta seção</p>
+            <p>Esta seção foi separada com o intuito de recebermos fotos tiradas pelos convidados, mas por que não compartilhar no WhatsApp?</p>
+            <p>Quando a foto e compartilhada pelo WhatsApp além de gerar um cache em seu dispositivo o arquivo passa por processamento, por aqui foi feito um tratamento para que o compartilhamento ocorra de modo direto, 
+            sem passar por servidores externos e sem passar por nenhum tipo de tratamento, assim vamos receber sua foto com a máxima qualidade possível do seu dispositivo.</p>
+            <p>Entao caso queira utilizar e nos presentear com mais memórias deste dia tao incrível, prometo que vamos guardar com muito carinho cada clique! E o mais importante! Divirtam-se!</p>
+            <input type="file" class="escolher-arquivos" name="fileToUpload[]" id="fileToUpload" multiple>
+            <p></p>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Enviar Arquivos" name="submit">
+        </form>
+        <BR>
+        <!-- Modal Bootstrap para exibir mensagem de carregamento -->
+        <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loadingModalLabel">Carregando suas fotos...</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 0%" id="modalProgressBar"></div>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="uploadPhotos()">Enviar Fotos</button>
-            </form>
-            <h2>Fotos Compartilhadas</h2>
-            <div id="sharedPhotos"></div>
+            </div>
         </div>
-        <!-- Incluindo Bootstrap e JS Incluindo jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Modal Bootstrap para exibir mensagem de sucesso -->
+        <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Upload Concluído</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Os arquivos foram enviados com sucesso!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
-            function exibirConfirmacaoCompartilhamento() {
-                var resposta = confirm("Você concorda em compartilhar suas fotos não só com os organizadores do evento, mas também com todos os convidados?");
-                
-                if (resposta) {
-                    // Se o usuário concordar, mostrar opção de compartilhamento de fotos
-                    exibirOpcaoCompartilhamento();
-                } else {
-                    // Se o usuário não concordar, mostrar apenas a opção de carregar fotos
-                    exibirOpcaoCarregarFotos();
-                }
-            }
-            function exibirOpcaoCompartilhamento() {
-                // Mostrar o formulário de compartilhamento
-                document.getElementById("formularioCompartilhamento").style.display = "block";
-            }
-            function exibirOpcaoCarregarFotos() {
-                alert("Opção de carregar fotos ativada!");
-                // Implemente aqui a lógica para carregar as fotos apenas
-                // ...
-            }
-            function uploadPhotos() {
-                var fileInput = document.getElementById('fileInput');
-                var formData = new FormData(document.getElementById('formCompartilhamento'));
-
-                // Adicione outros dados ao formulário, se necessário
-                var exibirNoMural = confirm('Deseja que os convidados vejam estas fotos no mural?');
-                formData.append('exibirNoMural', exibirNoMural);
-
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://192.168.0.14/arthur/upload.php', // Substitua com o caminho para seu script de upload no servidor
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        alert(response); // Exibe a resposta do servidor (pode ser removido ou adaptado)
-                        fileInput.value = ''; // Limpar input de arquivo após o upload
-                    },
-                    error: function(error) {
-                        console.error("Erro na requisição AJAX:", error);
-                    }
-                });
-            }
+            // Função para redirecionar para a página inicial
             function voltarParaInicio() {
                 window.location.href = "index.php";
             }
+            $(document).ready(function() {
+                $("#uploadForm").submit(function(e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    // Exibe a barra de progresso
+                    $("#progressBarContainer").show();
+                    $.ajax({
+                        xhr: function() {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function(e) {
+                                if (e.lengthComputable) {
+                                    var percent = Math.round((e.loaded / e.total) * 100);
+                                    $("#progressBar").css("width", percent + "%");
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        type: "POST",
+                        url: "upload.php",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            // Exibir o modal de sucesso
+                            $('#successModal').modal('show');
+                            // Limpar a barra de progresso após o upload
+                            $("#progressBarContainer").hide();
+                            $("#progressBar").css("width", "0%");
+                        }
+                    });
+                });
+            });
+            $(document).ready(function () {
+                $("#uploadForm").submit(function (e) {
+                    e.preventDefault();
+                    var formData = new FormData(this);
+                    // Exibe o modal de carregamento
+                    $('#loadingModal').modal('show');
+                    $.ajax({
+                        xhr: function () {
+                            var xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener("progress", function (e) {
+                                if (e.lengthComputable) {
+                                    var percent = Math.round((e.loaded / e.total) * 100);
+                                    $("#modalProgressBar").css("width", percent + "%");
+                                }
+                            }, false);
+                            return xhr;
+                        },
+                        type: "POST",
+                        url: "upload.php",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            // Exibir o modal de sucesso
+                            $('#successModal').modal('show');
+                            // Limpar a barra de progresso após o upload
+                            $("#progressBarContainer").hide();
+                            $("#progressBar").css("width", "0%");
+                            // Fechar o modal de carregamento
+                            $('#loadingModal').modal('hide');
+                        },
+                        error: function (error) {
+                            // Em caso de erro, fechar o modal de carregamento
+                            $('#loadingModal').modal('hide');
+                            // Exibir mensagem de erro
+                            alert("Desculpe, ocorreu um erro ao enviar seu arquivo.");
+                        }
+                    });
+                });
+            });
         </script>
         <!-- Botão no final da página -->
         <button type="button" class="btn btn-secondary btn-voltar" onclick="voltarParaInicio()">Voltar para o Início</button>

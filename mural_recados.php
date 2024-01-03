@@ -9,7 +9,7 @@
     <!-- Seu CSS personalizado -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="index">
     <div style="text-align: center; margin: 20px;">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#deixarRecadoModal">Deixar um Recado</button>
         <button type="button" class="btn btn-secondary" onclick="voltarParaInicio()">Voltar para o Início</button>
@@ -36,24 +36,20 @@
             </div>
         </div>
     </div>
-
     <!-- Lista de recados -->
     <div class="container" id="listaRecados">
         <?php include 'carregar_recados.php'; ?>
     </div>
-
     <!-- Incluindo Bootstrap e JS Incluindo jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
     <script>
         // Função para salvar recado
         function salvarRecado() {
             var mensagem = document.getElementById('mensagemRecado').value;
             var nome = document.getElementById('nomeRecado').value || 'Anônimo';
-
-            // Enviar dados para o servidor usando AJAX
+            // Enviar dados para o servidor
             $.ajax({
                 type: "POST",
                 url: "salvar_recado.php",
@@ -61,7 +57,6 @@
                 success: function(response) {
                     // Atualizar a lista de recados após o salvamento
                     atualizarListaRecados();
-                    
                     // Fechar o modal
                     $('#deixarRecadoModal').modal('hide');
                 },
@@ -70,18 +65,15 @@
                 }
             });
         }
-
         // Função para atualizar a lista de recados
         function atualizarListaRecados() {
             // Carregar a lista de recados usando PHP
             $("#listaRecados").load("carregar_recados.php");
         }
-
         // Função para redirecionar para a página inicial
         function voltarParaInicio() {
             window.location.href = "index.php";
         }
-
         // Atualizando a lista de recados ao carregar a página
         window.onload = atualizarListaRecados;
     </script>

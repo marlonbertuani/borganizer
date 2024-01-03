@@ -19,7 +19,7 @@ include "conexao.php";
         <div class="table-container">
             <table class="table">
                 <colgroup>
-                    <!-- Ajustar colunas conforme necessário -->
+                    <!-- Necessario para ajustar colunas -->
                     <col class="col-data_postagem">
                     <col class="col-nome">
                     <col class="col-sobrenome">

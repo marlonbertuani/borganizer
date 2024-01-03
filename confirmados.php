@@ -4,7 +4,7 @@ include "conexao.php";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head style="background-color: rgb(255, 255, 255, 0.75);">
+    <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Convidados Confirmados</title>
@@ -16,7 +16,7 @@ include "conexao.php";
     <body class="consultas">
         <br>
         <h2 style="text-align: center;">Convidados Confirmados:</h2>
-        <div class="table-container">
+        <div>
             <table class="table">
                 <colgroup>
                     <!-- Ajustar colunas conforme necessário -->

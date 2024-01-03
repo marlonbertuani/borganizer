@@ -8,13 +8,13 @@
         <title>Super Arthur</title>
         <!-- Incluindo Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <!-- Incluindo fontawesome para os ícones -->
+        <!-- Incluindo fontawesome para os ícones e alertas personalizados -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <!-- Meu CSS -->
         <link rel="stylesheet" href="css/style.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
-    <body>
+    <body class="index">
         <div class="header-container">
             <div class="logo-container">
                 <img class="logoarthur" src="img/superarthur.png" alt="Super Arthur Logo">
@@ -27,7 +27,7 @@
         </div>   
         <div class="content-container">
             <h1 class="msghome">Aniversário do Arthur!</h1>
-            <img src="img/arthur3.png" alt="Imagem arthur" width="230" height="260" class="arthur-img">
+            <img src="img/arthur3.png" alt="Imagem arthur" width="180" height="200" class="arthur-img">
             <h1 style="font-size: medium; text-align: center;">Confirme sua presença e nos ajude a organizar este momento especial!</h1>
             <h1 style="font-size: medium; text-align: center;">Prazo para confirmações até 17/01/2024 - 23:55</h1>
             <div class="container">
@@ -43,7 +43,7 @@
                     <p>Rua Rio Comprido, 989 - Riacho das Pedras, Contagem - MG</p>
                 </div>
             </div>
-            <!-- Botao Modal -->
+            <!-- Botao do Modal de rotas -->
             <div style="text-align: center;">
                 <a class="botoes" data-toggle="modal" data-target="#myModal">Opções de rota!</a>
             </div>
@@ -138,9 +138,8 @@
                                 <i class="fas fa-child"></i> Criança (abaixo de 7 anos)
                             </label>
                         </div>
-                        <!-- Nova div para o botão de adicionar convidado -->
+                        <!-- botão de adicionar convidado -->
                         <div class="text-center">
-                            <!-- Botão para adicionar convidado -->
                             <button type="button" class="btn btn-primary" onclick="adicionarConvidado()">Adicionar</button>
                         </div>
                     </div>
@@ -365,7 +364,6 @@
                     });
                     return;
                 }
-
                 // Pergunta se os convidados foram cadastrados e se pode prosseguir
                 Swal.fire({
                     html: 'Todos convidados foram cadastrados? Posso prosseguir?',
@@ -385,36 +383,30 @@
                     }
                 });
             }
-
             function enviarDados() {
                 // Criar um formulário dinâmico
                 var form = document.createElement('form');
                 form.method = 'POST';
                 form.action = 'confirmacoes.php'; // Altere o caminho conforme necessário
-
                 // Adicionar os dados dos convidados como campos ocultos ao formulário
                 for (var i = 0; i < convidados.length; i++) {
                     var inputNome = document.createElement('input');
                     inputNome.type = 'hidden';
                     inputNome.name = 'convidados[' + i + '][nome]';
                     inputNome.value = convidados[i].nome;
-
                     var inputSobrenome = document.createElement('input');
                     inputSobrenome.type = 'hidden';
                     inputSobrenome.name = 'convidados[' + i + '][sobrenome]';
                     inputSobrenome.value = convidados[i].sobrenome;
-
                     var inputIdade = document.createElement('input');
                     inputIdade.type = 'hidden';
                     inputIdade.name = 'convidados[' + i + '][idade]';
                     inputIdade.value = convidados[i].idade;
-
                     form.appendChild(inputNome);
                     form.appendChild(inputSobrenome);
                     form.appendChild(inputIdade);
                 }
-
-                // Enviar os dados usando AJAX
+                // Enviar os dados usando
                 $.ajax({
                     type: "POST",
                     url: form.action,
@@ -433,18 +425,15 @@
                         console.error("Erro na requisição AJAX:", error);
                     }
                 });
-
                 // Verificar se o formulário é filho do body antes de tentar removê-lo
                 if (form.parentNode === document.body) {
                     // Remover o formulário da página
                     document.body.removeChild(form);
                 }
-
                 $('#convidadosModal').modal('hide');
                 // Limpar a lista de convidados
                 limparListaConvidados();
             }
-
             function validarNaoVouFormulario() {
                 var nomeNaoVouInput = document.getElementById('inputNomeNaoVou');
                 var sobrenomeNaoVouInput = document.getElementById('inputSobrenomeNaoVou');
@@ -462,7 +451,7 @@
                     sobrenome: sobrenomeNaoVou,
                     comentario: comentario
                 };
-                // Envie os dados para o servidor usando AJAX
+                // Envie os dados para o servidor usando
                 $.ajax({
                     type: "POST",
                     url: "processanao.php",
@@ -502,7 +491,7 @@
                     <div class="modal-body">
                         <!-- Adicione seus itens de menu aqui -->
                         <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='mural_recados.php'">Mural de Recados</button>
-                        <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='contrucao.html'">Compartilhar fotos</button>
+                        <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='fotos.php'">Compartilhar fotos</button>
                         <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.open('https://api.whatsapp.com/send/?phone=5531994778938&text=Preciso+de+ajuda+para+confirmar+minha+presen%C3%A7a.&type=phone_number&app_absent=0', '_blank')">Entrar em Contato!</button>                
                     </div>
                 </div>
