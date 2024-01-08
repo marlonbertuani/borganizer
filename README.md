@@ -26,11 +26,11 @@ Vai ser um sistema bem objetivo, focado em atender ao cliente e as suas necessid
 # Requisitos Funcionais 
 
 - [x] **Confirmar Presença.**
-- [ ] Compartilhar fotos.
-- [ ] Deixar um comentario, feedback ou agradecimento.
-- [ ] Visualizar confirmados.
-- [ ] Galeria de fotos.
-- [ ] Localizaçao do evento.
+- [X] Compartilhar fotos.
+- [X] Deixar um comentario, feedback ou agradecimento.
+- [X] Visualizar confirmados.
+- [X] Localizaçao do evento.
+- [X] Opções de rota! (Direciona para o evento com um clique).
 
 # Tecnologias Usadas
 
