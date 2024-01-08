@@ -491,7 +491,7 @@
                     <div class="modal-body">
                         <!-- Adicione seus itens de menu aqui -->
                         <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='mural_recados.php'">Mural de Recados</button>
-                        <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='fotos.php'">Compartilhar fotos</button>
+                        <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.location.href='contrucao.html'">Compartilhar fotos</button>
                         <button type="button" class="btn btn-warning btn-block mb-2" onclick="window.open('https://api.whatsapp.com/send/?phone=5531994778938&text=Preciso+de+ajuda+para+confirmar+minha+presen%C3%A7a.&type=phone_number&app_absent=0', '_blank')">Entrar em Contato!</button>                
                     </div>
                 </div>

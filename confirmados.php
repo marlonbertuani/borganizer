@@ -60,6 +60,49 @@ include "conexao.php";
                 </tbody>
             </table>
         </div>
+        <br>
+        <div>
+            <table class="c">
+                <colgroup>
+                    <!-- Ajustar colunas conforme necessário -->
+                    <col class="col-idadee">
+                    <col class="col-quantidae">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="c">Idade</th>
+                        <th class="c">Quantidae</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Consulta SQL para obter os dados
+                    $query2 = "SELECT COUNT(CASE WHEN idade = 'adulto' THEN 1 END) AS quantidade_adulto, COUNT(CASE WHEN idade = 'crianca' THEN 1 END) AS quantidade_crianca, COUNT(DISTINCT id) AS quantidade_nome FROM confirmacoes";
+                    $resultado2 = $conexao->query($query2);
+                    // Verifica se a consulta retornou resultados
+                    if ($resultado2->num_rows > 0) {
+                        // Loop para exibir os dados
+                        while ($linha2 = $resultado2->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td class='c'>Adultos</td>";
+                            echo "<td class='c'>{$linha2['quantidade_adulto']}</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td class='c'>Crianças</td>";
+                            echo "<td class='c'>{$linha2['quantidade_crianca']}</td>";
+                            echo "</tr>";
+                            echo "<tr>";
+                            echo "<td class='c'>Quantidade Total</td>";
+                            echo "<td class='c'>{$linha2['quantidade_nome']}</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>Nenhum dado encontrado.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
         <!-- Incluindo Bootstrap e JS Incluindo jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

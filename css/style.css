@@ -243,7 +243,7 @@ body.consultas {
     z-index: -1;
 }
 
-/* ********************************** Direcionado as paginas de consultas ********************************** */
+/* ********************************** Direcionado a pagina de fotos ********************************** */
 body.fotos {
     background-color: rgba(255, 255, 255, 0.6);
     height: 100vh; /* Ajusta a altura do corpo para 100% da viewport */
@@ -278,4 +278,27 @@ h2.fotos {
 
 #progressBar {
     background-color: #28a745; /* Cor verde do Bootstrap para sucesso */
+}
+
+/* ********************************** Direcionado a tabela de confirmados.php ********************************** */
+
+
+/* Estilo para as bordas da tabela */
+table.c {
+    width: 100%;
+    border: 2px solid black; /* Cor e espessura da borda */
+    border-radius: 10px; /* Raio de arredondamento das bordas */
+    margin: auto; /* Centralizar a tabela na página */
+    border-spacing: 0; /* Evita o espaçamento entre células que pode interferir no arredondamento */
+    overflow: hidden; /* Certifica-se de que as bordas arredondadas sejam aplicadas corretamente */
+    background-color: rgba(241, 189, 189, 0.5); /* cor de fundo */
+}
+
+/* Estilo para as células da tabela */
+th.c, td.c {
+    border: 1px solid black; /* Cor e espessura da borda das células */
+    border-radius: 10px;
+    padding: 8px; /* Espaçamento interno nas células */
+    text-align: center; /* Alinhamento do texto */
+    text-decoration: white;
 }
