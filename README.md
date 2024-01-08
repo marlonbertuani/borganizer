@@ -54,4 +54,4 @@ Livre.
 
 # Agradecimentos
 
-Professores, sem voçes nada seria possivel!
+Professores, sem vocês nada seria possivel!
