@@ -54,4 +54,5 @@ Livre.
 
 # Agradecimentos
 
+Claro! meu peqenino que foi a inspiraçao do proeto e minha esposa que ficou na minha cola para que isso saisse do papel!
 Professores, sem vocês nada seria possivel!
