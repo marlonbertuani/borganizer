@@ -54,5 +54,6 @@ Livre.
 
 # Agradecimentos
 
-Claro! meu peqenino que foi a inspiraçao do proeto e minha esposa que ficou na minha cola para que isso saisse do papel!
+Claro! Meu pequenino que foi a inspiração do projeto e minha esposa que ficou na minha cola para que as ideias saissem do papel!
+
 Professores, sem vocês nada seria possivel!
