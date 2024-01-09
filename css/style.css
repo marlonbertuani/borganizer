@@ -27,7 +27,7 @@ body.index {
     margin-left: 10px;
 }
 .custom-hamburger {
-    color: black; 
+    color: rgb(255, 0, 0); 
 }
 .logo-container {
     flex: 1; /* Ocupa o máximo possível de espaço disponível */
@@ -229,6 +229,10 @@ body.index {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.recados{
+    margin: 3px;
 }
 /* ********************************** Direcionado as paginas de consultas ********************************** */
 body.consultas {

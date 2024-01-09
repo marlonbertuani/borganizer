@@ -37,7 +37,7 @@
         </div>
     </div>
     <!-- Lista de recados -->
-    <div class="container" id="listaRecados">
+    <div class="recados" id="listaRecados">
         <?php include 'carregar_recados.php'; ?>
     </div>
     <!-- Incluindo Bootstrap e JS Incluindo jQuery -->
